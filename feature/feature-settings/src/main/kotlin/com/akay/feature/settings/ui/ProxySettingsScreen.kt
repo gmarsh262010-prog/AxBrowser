@@ -72,6 +72,9 @@ fun ProxySettingsScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { editingProxy = null; showAddDialog = true },
+                // The label is drawn, but the accessibility node was coming through
+                // with an empty name, so TalkBack and UI dumps could not find it.
+                modifier = Modifier.semantics { contentDescription = "Add proxy" },
                 icon = { Icon(Icons.Default.Add, contentDescription = null) },
                 text = { Text("Add proxy") },
                 containerColor = Primary
