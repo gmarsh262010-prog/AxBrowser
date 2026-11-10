@@ -36,7 +36,12 @@ class AxBrowserApp : Application() {
         } catch (e: YoutubeDLException) {
             Log.e("AxBrowser", "Failed to initialize yt-dlp: ${e.message}")
         } catch (e: Exception) {
-            Log.e("AxBrowser", "Unexpected error initializing yt-dlp: ${e.message}")
+            Log.e("AxBrowser", "Unexpected error initializing yt-dlp", e)
+        } catch (e: LinkageError) {
+            // ExceptionInInitializerError extends Error, so the Exception catch
+            // above does not see it. A broken yt-dlp/ffmpeg static initializer
+            // must not take down browsing.
+            Log.e("AxBrowser", "yt-dlp failed to link", e)
         }
     }
 
